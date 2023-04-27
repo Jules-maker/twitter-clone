@@ -5,7 +5,7 @@ import { getTweets } from 'lib/data.js'
 //Components
 import NewTweet from 'components/NewTweet'
 import Tweets from 'components/Tweets'
-
+import Utils from 'components/Utils'
 export default function Home({tweets}) {
   const { data: session, status } = useSession()
   const loading = status === 'loading'
@@ -18,11 +18,14 @@ export default function Home({tweets}) {
   if (!session) {
     router.push('/')
   }
-
+  if (session && !session.user.name) {
+    router.push('/setup')
+  }
   return (
     <>
       <NewTweet />
       <Tweets tweets={tweets} />
+      <Utils/>
     </>
   )
   
